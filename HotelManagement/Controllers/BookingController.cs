@@ -22,29 +22,30 @@ namespace HotelManagement.Controllers
         }
 
 
+
         [HttpPost("new-booking")]
-        public async Task<ActionResult> AddBooking([FromBody] BookingModel booking)
+        public async Task<IActionResult> AddBooking([FromBody] BookingModel booking)
         {
             try
             {
                 var id = await _bookingRepo.NewBooking(booking);
-                return Ok(id);
+                return Ok(new { bookingId = id });
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                    "Error connecting to the database");
             }
         }
 
-        [HttpGet("getBooking/{id}")]
-        public async Task<IActionResult> GetBookingById([FromRoute]int id)
+        [HttpGet("get-booking/{id}")]
+        public async Task<IActionResult> GetBookingById([FromRoute] int id)
         {
             try
             {
                 var booking = await _bookingRepo.GetBookByIdAsync(id);
 
-                if (booking==null)
+                if (booking == null)
                 {
                     return NotFound();
                 }
@@ -56,7 +57,6 @@ namespace HotelManagement.Controllers
                     "Error retrieving data from the database");
             }
         }
-
 
     }
 }

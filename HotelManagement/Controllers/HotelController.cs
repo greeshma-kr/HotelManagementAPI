@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HotelManagement.Helpers;
 using HotelManagement.Models;
 using HotelManagement.Repository;
 using Microsoft.AspNetCore.Http;
@@ -15,19 +16,16 @@ namespace HotelManagement.Controllers
     public class HotelController : ControllerBase
     {
 
-     
 
         private readonly IHotelRepository _hotelRepo;
-
-
 
         public HotelController(IHotelRepository hotelRepo)
         {
             _hotelRepo = hotelRepo;
         }
 
-        [HttpGet("getHotel/{id}")]
-        public async Task<ActionResult<IEnumerable<HotelModel>>> GetHotelById([FromRoute] int id)
+        [HttpGet("get-hotel/{id}")]
+        public async Task<IActionResult> GetHotelById([FromRoute] int id)
         {
             try
             {
@@ -38,27 +36,34 @@ namespace HotelManagement.Controllers
                     return NotFound();
                 }
                 return Ok(result);
+
             }
             catch (Exception)
             {
+
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
             }
         }
 
 
-        [HttpPost("search")]
-        public async Task<ActionResult<IEnumerable<HotelModel>>> Search(string name,int pageNumber)
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string name, int pageNumber, int pageSize)
         {
             try
             {
-                var result = await _hotelRepo.Search(name);
+                var validFilter = new PaginationFilter(pageNumber, pageSize);
+
+                var result = await _hotelRepo.Search(name, validFilter.PageNumber, validFilter.PageSize);
 
                 if (!result.Any())
                 {
                     return NotFound();
                 }
-                return Ok(result);
+                return Ok(new PagedResponse<List<HotelModel>>(result, validFilter.PageNumber, validFilter.PageSize));
+
+                // return Ok(result);
+
             }
             catch (Exception)
             {

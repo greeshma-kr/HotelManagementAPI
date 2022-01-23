@@ -34,27 +34,48 @@ namespace HotelManagement.Repository
                 .Include(address => address.Address)
                 .Include(images => images.Images).FirstAsync(x => x.Id == id);
 
-                return _mapper.Map<HotelModel>(hotels);
+            return _mapper.Map<HotelModel>(hotels);
 
 
         }
 
-        
 
-        public async Task<List<HotelModel>> Search(string searchKey)
+
+
+        public async Task<List<HotelModel>> Search(string searchKey, int pageNumber, int pageSize)
         {
-            var hotels = await _context.Hotel
-                .AsNoTracking()
-                .Include(rating => rating.Rating)
-                .Include(facil => facil.Facilities)
-                .Include(address => address.Address)
-                .Include(images => images.Images)
-                .Where(hotel => hotel.Title.Contains(searchKey) || hotel.City.Contains(searchKey))
-                .ToListAsync();
+            if (!String.IsNullOrEmpty(searchKey))
+            {
+                var hotels = await _context.Hotel
+               .AsNoTracking()
+               .Include(rating => rating.Rating)
+               .Include(facil => facil.Facilities)
+               .Include(address => address.Address)
+               .Include(images => images.Images)
+               .Skip((pageNumber - 1) * pageSize)
+               .Take(pageSize)
+               .Where(hotel => hotel.Title.Contains(searchKey) || hotel.City.Contains(searchKey))
+               .ToListAsync();
 
-            return _mapper.Map<List<HotelModel>>(hotels); 
+                return _mapper.Map<List<HotelModel>>(hotels);
+            }
+            else
+            {
+                var hotels = await _context.Hotel
+                  .AsNoTracking()
+                  .Include(rating => rating.Rating)
+                  .Include(facil => facil.Facilities)
+                  .Include(address => address.Address)
+                  .Include(images => images.Images)
+                  .Skip((pageNumber - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToListAsync();
+
+                return _mapper.Map<List<HotelModel>>(hotels);
+
+            }
+
         }
-
 
     }
 }

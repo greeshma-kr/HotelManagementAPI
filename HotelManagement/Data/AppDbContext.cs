@@ -20,7 +20,6 @@ namespace HotelManagement.Data
         public DbSet<HotelImages> HotelImages { get; set; }
         public DbSet<Rating> Rating { get; set; }
 
-        public DbSet<User> User { get; set; }
         public DbSet<Reservation> Reservation { get; set; }
 
         public DbSet<Guests> Guests { get; set; }

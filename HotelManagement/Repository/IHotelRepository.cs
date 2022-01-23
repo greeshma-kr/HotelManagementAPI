@@ -9,7 +9,7 @@ namespace HotelManagement.Repository
 {
     public interface IHotelRepository 
     {
-        Task<List<HotelModel>> Search(string searchKey);
+        Task<List<HotelModel>> Search(string searchKey, int pageNumber, int pageSize);
         Task<HotelModel> GetHotelByIdAsync(int hotelId);
     }
 }
