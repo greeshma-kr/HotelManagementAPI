@@ -7,7 +7,7 @@ namespace HotelManagement.Data
 {
     public class Rating
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int Votes_count { get; set; }
 
         public string Value { get; set; }

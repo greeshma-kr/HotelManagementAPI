@@ -8,7 +8,7 @@ namespace HotelManagement.Data
     public class HotelImages
     {
         public int Id { get; set; }
-        public string mediaUrl { get; set; }
-        public Boolean Primary_flag { get; set; }
+        public string MediaUrl { get; set; }
+        public Boolean PrimaryFlag { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace HotelManagement.Data
 {
     public class Facilities
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int HotelId { get; set; }
         
         public Boolean Breakfast { get; set; }

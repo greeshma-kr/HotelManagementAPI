@@ -11,7 +11,7 @@ namespace HotelManagement.Models
         public int Id { get; set; }
         public int Votes_count { get; set; }
 
-        public string value { get; set; }
+        public string Value { get; set; }
 
         public int HotelId { get; set; }
     }

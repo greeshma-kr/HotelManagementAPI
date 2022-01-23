@@ -8,7 +8,7 @@ namespace HotelManagement.Models
     public class HotelImageModel
     {
         public int Id { get; set; }
-        public string mediaUrl { get; set; }
-        public int Primary_flag { get; set; }
+        public string MediaUrl { get; set; }
+        public Boolean PrimaryFlag { get; set; }
     }
 }

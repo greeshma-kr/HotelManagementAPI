@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelManagement.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace HotelManagement.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<LoggedInUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
            : base(options)
